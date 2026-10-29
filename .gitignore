@@ -1,0 +1,11 @@
+# Python environment (each person creates their own)
+.venv/
+
+# Secret keys (API key will live here later)
+.env
+
+# Database file (rebuilt from the download scripts)
+*.duckdb
+
+# Python cache files
+__pycache__/
