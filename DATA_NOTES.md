@@ -32,6 +32,18 @@ These are my notes from exploring Elexon's data before building anything. I look
 - System prices: these are imbalance prices, not the market price.
 - NESO embedded wind and solar: possible later. It would add a new package, a new source and a different licence.
 
+
+
+## AGPT raw endpoint (checked 11 Nov 2026)
+
+- `/datasets/AGPT` only filters by publish time (`publishDateTimeFrom`, `publishDateTimeTo`). Settlement dates are not accepted.
+- Data is published about 2.5 hours after each half-hour starts (2h29m on 27 Oct, very stable).
+- So asking for one publish day gives the end of the previous day and misses the end of the day I want. I ask for a wider window (+12 hours) and keep only the settlement date I need.
+- Result for 27 Oct: 528 rows = 48 half-hours x 11 types, no duplicates, no missing half-hours, only revision 1.
+- The rows are flat (one row per half-hour and type), unlike the down-sampled endpoint.
+- I didn't see any revisions, but the column exists. The loader should stop with an error if the same half-hour and type appears twice, instead of silently picking one.
+
 ## Still to check
 
-- How `/datasets/AGPT` works for longer periods (parameters, limits).
+- The biggest date range allowed per request for `/datasets/AGPT`.
+- Expected number of half-hours on clock-change days (46 or 50).
