@@ -41,9 +41,9 @@ These are my notes from exploring Elexon's data before building anything. I look
 - So asking for one publish day gives the end of the previous day and misses the end of the day I want. I ask for a wider window (+12 hours) and keep only the settlement date I need.
 - Result for 27 Oct: 528 rows = 48 half-hours x 11 types, no duplicates, no missing half-hours, only revision 1.
 - The rows are flat (one row per half-hour and type), unlike the down-sampled endpoint.
+- Max 4 days per request. A window from 00:00 to 00:00 four days later works (2112 rows = 4 x 528), 5 days returns a 400 error. Requests take about 0.3 seconds.
 - I didn't see any revisions, but the column exists. The loader should stop with an error if the same half-hour and type appears twice, instead of silently picking one.
 
 ## Still to check
 
-- The biggest date range allowed per request for `/datasets/AGPT`.
 - Expected number of half-hours on clock-change days (46 or 50).
